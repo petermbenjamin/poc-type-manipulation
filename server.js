@@ -1,37 +1,38 @@
 const http = require('http')
 const url = require('url')
 const querystring = require('querystring')
-const PORT = 3000
-
-const ESCAPECHARS = RegExp(`<|>|&`, 'g') // just check for 3 chars in this contrived example
 
 function sanitize(input) {
+  const AMP = '&'
+  const LT = '<'
+  const GT = '>'
+  const ESCAPECHARS = RegExp(`${LT}|${GT}|${AMP}`, 'g') // just check for 3 chars in this contrived example
   if (typeof input === 'string') {
     if (!ESCAPECHARS.test(input)) {
-      console.log(`input: ${input} is assumed to be good...`)
+      // input is good
       return input
     }
-    console.log(`input: ${input} needs to be sanitized...`)
+    // input is bad
     return input
-      .replace('&', '&amp;')
-      .replace('<', '&lt;')
-      .replace('>', '&gt;')
+      .replace(AMP, '&amp;')
+      .replace(LT, '&lt;')
+      .replace(GT, '&gt;')
   }
   return input
 }
 
 const requestHandler = (req, resp) => {
-  // console.log(req)
   let parsedURL = url.parse(req.url)
-  // sanitize & eval
   let userInput = querystring.parse(parsedURL.query)
   let sanitized = sanitize(userInput.foo)
-  setImmediate(() => eval(sanitized))
-  resp.end(JSON.stringify(userInput))
+  setImmediate(() => {
+    console.log(`received: ${sanitized}`)
+  })
+  resp.end(JSON.stringify(sanitized))
 }
 
 const server = http.createServer(requestHandler)
-
+const PORT = 3000
 server.listen(PORT, err => {
   if (err) return console.log(`server failed: ${err}`)
   console.log(`server listening on ${PORT}`)
