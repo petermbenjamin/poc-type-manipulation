@@ -1,0 +1,19 @@
+{
+  "name": "poc-type-manipulation",
+  "version": "0.0.1",
+  "description": "Type Manipulation proof-of-concept",
+  "private": true,
+  "scripts": {
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/petermbenjamin/poc-type-manipulation.git"
+  },
+  "author": "Peter Benjamin <petermbenjamin@gmail.com> (https://petermbenjamin.github.io)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/petermbenjamin/poc-type-manipulation/issues"
+  },
+  "homepage": "https://github.com/petermbenjamin/poc-type-manipulation#readme"
+}
