@@ -2,11 +2,12 @@ const http = require('http')
 const url = require('url')
 const querystring = require('querystring')
 
+const AMP = '&'
+const LT = '<'
+const GT = '>'
+const ESCAPECHARS = RegExp(`${LT}|${GT}|${AMP}`, 'g') // just check for 3 chars in this contrived example
+
 function sanitize(input) {
-  const AMP = '&'
-  const LT = '<'
-  const GT = '>'
-  const ESCAPECHARS = RegExp(`${LT}|${GT}|${AMP}`, 'g') // just check for 3 chars in this contrived example
   if (typeof input === 'string') {
     if (!ESCAPECHARS.test(input)) {
       // input is good
